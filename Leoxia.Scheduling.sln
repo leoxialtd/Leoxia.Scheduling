@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1D6EC164-7C38-489A-85C3-8D339DDC3020}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F9E5253D-8DEF-4F49-B1B0-19AE7A7E9066}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7538A25E-2983-4BC0-825F-B8B1147A6476}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leoxia.Scheduling", "src\Leoxia.Scheduling\Leoxia.Scheduling.csproj", "{EB468CF8-E502-49DA-B52A-D675F7A651EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leoxia.Scheduling.Tests", "test\Leoxia.Scheduling.Tests\Leoxia.Scheduling.Tests.csproj", "{FBB3D461-6C20-4849-B745-BA5CDC084692}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB468CF8-E502-49DA-B52A-D675F7A651EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB468CF8-E502-49DA-B52A-D675F7A651EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB468CF8-E502-49DA-B52A-D675F7A651EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB468CF8-E502-49DA-B52A-D675F7A651EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBB3D461-6C20-4849-B745-BA5CDC084692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBB3D461-6C20-4849-B745-BA5CDC084692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBB3D461-6C20-4849-B745-BA5CDC084692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBB3D461-6C20-4849-B745-BA5CDC084692}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EB468CF8-E502-49DA-B52A-D675F7A651EA} = {1D6EC164-7C38-489A-85C3-8D339DDC3020}
+		{FBB3D461-6C20-4849-B745-BA5CDC084692} = {7538A25E-2983-4BC0-825F-B8B1147A6476}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19755D88-50A7-427C-894B-FB69CFA90D5D}
+	EndGlobalSection
+EndGlobal

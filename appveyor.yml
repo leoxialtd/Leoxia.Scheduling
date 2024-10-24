@@ -1,0 +1,9 @@
+version: 1.3.0.{build}
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+build_script:
+  - ps: .\build.ps1
+test_script:
+  - ps: .\run-tests.ps1
+deploy: off

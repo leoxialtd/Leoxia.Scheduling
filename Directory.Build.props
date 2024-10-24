@@ -1,0 +1,33 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Copyright>Copyright (c) Leoxia Ltd 2011 - 2042. All Rights reserved.</Copyright>
+	  <Company>Leoxia</Company>
+	  <Authors>Leoxia</Authors>
+	  <Nullable>enable</Nullable>
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	  <PackageLicenseType>file</PackageLicenseType>
+    <PackageProject>https://www.leoxia.com</PackageProject>
+    <Repository>https://github.com/leoxialtd/leoxia.scheduling</Repository>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>Leoxia Scheduling</PackageTags>
+    <PackageReleaseNotes />
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <IsPackable>true</IsPackable>
+    <Deterministic>true</Deterministic>
+    <PackageIcon>icon.png</PackageIcon>
+    <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <None Include="../../images/icon.png" Link="Properties\icon.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+</Project>
