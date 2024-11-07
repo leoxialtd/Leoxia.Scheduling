@@ -49,7 +49,7 @@ internal class JobBuilder : IJobBuilder
         return this;
     }
 
-    public IJobBuilder ThenRun(Action<IInvocable> action)
+    public IJobBuilder ThenRun(Func<IInvocable, Task> action)
     {
         _job.ExecutionQueue.Enqueue(action);
         return this;

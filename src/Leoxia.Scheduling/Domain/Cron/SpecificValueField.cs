@@ -34,4 +34,9 @@ public class SpecificValueField : CronField
     {
         return _target == value;
     }
+
+    public override string ToString()
+    {
+        return _target.ToString();
+    }
 }

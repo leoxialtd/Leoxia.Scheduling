@@ -220,4 +220,9 @@ public class CronExpression
             return next;
         }
     }
+
+    public override string ToString()
+    {
+        return $"{Seconds} {Minutes} {Hours} {DayOfMonth} {Month} {DayOfWeek}";
+    }
 }

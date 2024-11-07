@@ -34,4 +34,9 @@ internal class CompositeField : CronField
     {
         return _field.IsFirstMatch(value);
     }
+
+    public override string ToString()
+    {
+        return string.Join(',', _fields.Select(x => x.ToString()));
+    }
 }

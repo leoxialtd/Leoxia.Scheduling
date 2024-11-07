@@ -18,6 +18,11 @@ public static class JobSchedulerExtensions
     //    return scheduler.Schedule();
     //}
 
+    public static IJobBuilder ThenRun(this IJobBuilder builder, Action<IInvocable> action)
+    {
+        return builder.ThenRun(Wraps(action));
+    }
+
     public static IJobBuilder EverySeconds(this IJobBuilder builder, int seconds = 1)
     {
         return builder.Every(TimeSpan.FromSeconds(seconds));
@@ -47,5 +52,14 @@ public static class JobSchedulerExtensions
     public static IJobBuilder Once(this IJobBuilder builder)
     {
         return builder.Times(1);
+    }
+
+    private static Func<IInvocable, Task> Wraps(Action<IInvocable> action)
+    {
+        return j =>
+        {
+            action(j);
+            return Task.CompletedTask;
+        };
     }
 }

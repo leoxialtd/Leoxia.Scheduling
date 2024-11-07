@@ -31,4 +31,9 @@ public class IntervalField : CronField
     {
         return (value - _start) == _interval;
     }
+
+    public override string ToString()
+    {
+        return $"{_start}/{_interval}";
+    }
 }

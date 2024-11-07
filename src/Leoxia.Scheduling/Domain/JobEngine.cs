@@ -58,7 +58,7 @@ internal class JobEngine
 
                         foreach (var action in run.Job.ExecutionQueue)
                         {
-                            action(invocable.Invocable);
+                            await action(invocable.Invocable);
                         }
 
                         _logger.LogDebug($"[Scheduling] Run {run}. Queued actions invoked.");

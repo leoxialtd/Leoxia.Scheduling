@@ -15,9 +15,9 @@ public class FastTimeProvider : IFastTimeProvider
 {
     private DateTimeOffset _utcNow;
 
-    public FastTimeProvider()
+    public FastTimeProvider(ITimeProvider provider)
     {
-        _utcNow = DateTimeOffset.UtcNow;
+        _utcNow = provider.UtcNow();
     }
 
     public void Set(DateTimeOffset now)

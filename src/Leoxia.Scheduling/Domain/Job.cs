@@ -16,7 +16,7 @@ internal class Job(Type type, IInvocableResolver resolver) : IJob
 
     public IInvocableResolver Resolver { get; set; } = resolver;
 
-    public Queue<Action<IInvocable>> ExecutionQueue { get; } = new Queue<Action<IInvocable>>();
+    public Queue<Func<IInvocable,Task>> ExecutionQueue { get; } = new Queue<Func<IInvocable, Task>>();
 }
 
 internal class DummyRunScheduler : IRunScheduler

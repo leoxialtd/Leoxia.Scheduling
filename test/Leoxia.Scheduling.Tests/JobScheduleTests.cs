@@ -114,6 +114,7 @@ namespace Leoxia.Scheduling.Tests
 
             var now = ParseTime("2024/10/24 04:00:01");
             Time.Set(now);
+            Timer.Tick();
 
             // WHEN a job is scheduled
             scheduler.Schedule<MyJob>()

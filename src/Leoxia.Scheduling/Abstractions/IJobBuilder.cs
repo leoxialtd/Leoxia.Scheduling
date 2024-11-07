@@ -14,7 +14,7 @@ public interface IJobBuilder
 
     IJobBuilder ResolveWith(Func<IJob, IInvocable> invocableFactory);
 
-    IJobBuilder ThenRun(Action<IInvocable> action);
+    IJobBuilder ThenRun(Func<IInvocable, Task> action);
 
     IJob Build();
 }

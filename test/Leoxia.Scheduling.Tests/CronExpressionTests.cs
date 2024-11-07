@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Leoxia.Scheduling.Domain.Cron;
+﻿using Leoxia.Scheduling.Domain.Cron;
 using NUnit.Framework;
 
 namespace Leoxia.Scheduling.Tests
@@ -63,6 +62,17 @@ namespace Leoxia.Scheduling.Tests
             var next = cron.GetNextTrigger(nowTime);
             var expectedTime = ParseTime(expected);
             Assert.That(next, Is.EqualTo(expectedTime));
+            if (cronText.StartsWith("*/"))
+            {
+                cronText = cronText.Replace("*/", "0/");
+            }
+
+            if (cronText.EndsWith(" 0"))
+            {
+                cronText = cronText[..^2] + " 7";
+            }
+
+            Assert.That(cron.ToString(), Is.EqualTo(cronText));
         }
 
         [Test]
@@ -75,6 +85,8 @@ namespace Leoxia.Scheduling.Tests
             var result = cron.GetNextTrigger(nowWithPrecision);
             Assert.That(result, Is.EqualTo(expectedNext));
         }
+
+
 
         private DateTimeOffset ParseTime(string time)
         {
