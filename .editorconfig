@@ -1,0 +1,43 @@
+# https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+
+# top-most .editorconfig file
+root = true
+
+# don't use tabs for indentation
+[*]
+indent_style = space
+
+# code files
+[*.{cs,csx,vb,vbx}]
+indent_size = 4
+
+# xml project files
+[*.{csproj,vbproj,proj,projitems,shproj,msbuildproj}]
+indent_size = 2
+
+# xml config files
+[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
+indent_size = 2
+
+# css files
+[*.css]
+indent_size = 2
+
+# json files
+[*.json]
+indent_size = 2
+
+# xml project files
+[*.{csproj,vbproj,proj,projitems,shproj,msbuildproj}]
+indent_size = 2
+
+# xml config files
+[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
+indent_size = 2
+
+# whitespace handling
+trim_trailing_whitespace = true:error
+insert_final_newline = false
+[*.{cs,vb}]
+tab_width = 4
+end_of_line = crlf

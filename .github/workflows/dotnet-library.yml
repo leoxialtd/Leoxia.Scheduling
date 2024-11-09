@@ -1,0 +1,113 @@
+name: Build, Test, Coverage, and Publish
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+  pull_request:
+    branches:
+      - main  # Run on pull requests targeting the main branch
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run Tests with Coverage
+        env:
+          DOTCOVER_LICENSE: ${{ secrets.DOTCOVER_LICENSE }}
+        run: |
+          dotnet tool install -g JetBrains.dotCover.GlobalTool
+          export PATH="$PATH:$HOME/.dotnet/tools"
+          pwsh ./.build/RunCoverage.ps1
+
+      - name: Generate Coverage Report
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          reportgenerator -reports:coverage.xml -targetdir:coveragereport -reporttypes:"HtmlInline_AzurePipelines;Badges"
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coveragereport
+
+      - name: Upload Coverage Badge
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-badge
+          path: coveragereport/badge_linecoverage.svg
+
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Pack
+        run: dotnet pack --configuration Release --no-build -o ./output
+
+      - name: Publish to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push "./output/*.nupkg" --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+
+  badge:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+     BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Download Coverage Badge
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-badge
+          path: ./coveragereport
+
+      - name: Commit Coverage Badge
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          cp ./coveragereport/badge_linecoverage.svg ./badge.svg
+          git add badge.svg
+          git commit -m "Update coverage badge" || echo "No changes to commit"
+          git push origin HEAD:$BRANCH_NAME
+
