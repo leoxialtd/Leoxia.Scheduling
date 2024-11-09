@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F9E525
 		Directory.Packages.props = Directory.Packages.props
 		dotcover.config.xml = dotcover.config.xml
 		.github\workflows\dotnet-library.yml = .github\workflows\dotnet-library.yml
+		.build\Publish.ps1 = .build\Publish.ps1
 		.build\RunCoverage.ps1 = .build\RunCoverage.ps1
 	EndProjectSection
 EndProject
