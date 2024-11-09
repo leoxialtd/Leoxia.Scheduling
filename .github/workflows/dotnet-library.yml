@@ -36,8 +36,7 @@ jobs:
         run: |
           dotnet tool install -g JetBrains.dotCover.GlobalTool
           export PATH="$PATH:$HOME/.dotnet/tools"
-          dotcover cover --targetExecutable="dotnet" --targetArguments="test --no-build --verbosity normal" --output="coverage.dcvr"
-          dotcover report --source="coverage.dcvr" --output="coverage.xml" --reportType="XML"
+          pwsh ./.build/RunCoverage.ps1
 
       - name: Generate Coverage Report
         run: |

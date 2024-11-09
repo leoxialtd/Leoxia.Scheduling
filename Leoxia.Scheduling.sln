@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F9E525
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
+		dotcover.config.xml = dotcover.config.xml
 		.github\workflows\dotnet-library.yml = .github\workflows\dotnet-library.yml
+		.build\RunCoverage.ps1 = .build\RunCoverage.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7538A25E-2983-4BC0-825F-B8B1147A6476}"

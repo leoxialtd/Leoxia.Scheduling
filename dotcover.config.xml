@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageParams>
+
+  <!-- Remove specified files from report. Ant-style patterns are supported here. -->
+  <ExcludeFileMasks>
+    <Mask>**/*.generated.cs</Mask>
+    <Mask>**/*.tmp.cs</Mask>
+  </ExcludeFileMasks>
+
+ 
+  <!-- Coverage filters. It's possible to use asterisks as wildcard symbols. -->
+  <Filters>
+    <ExcludeFilters>
+      <FilterEntry>
+        <ModuleMask>*.Tests.*</ModuleMask>
+      </FilterEntry>
+      <FilterEntry>
+        <ModuleMask>*.Tests</ModuleMask>
+      </FilterEntry>
+      <FilterEntry>
+        <ModuleMask>Microsoft.*</ModuleMask>
+      </FilterEntry>
+      <FilterEntry>
+        <ModuleMask>Newtonsoft.Json</ModuleMask>
+      </FilterEntry>
+      <FilterEntry>
+        <ModuleMask>System.*</ModuleMask>
+      </FilterEntry>
+      <FilterEntry>
+        <ModuleMask>Microsoft.TestPlatform</ModuleMask>
+      </FilterEntry>
+      <FilterEntry>
+        <ModuleMask>testhost.x86</ModuleMask>
+      </FilterEntry>
+      <FilterEntry>
+        <ModuleMask>testhost</ModuleMask>
+      </FilterEntry>
+    </ExcludeFilters>
+  </Filters>
+ 
+  <!-- Attribute filters. It's possible to use asterisks as wildcard symbols. -->
+  <AttributeFilters>
+    <AttributeFilterEntry>System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute</AttributeFilterEntry>
+  </AttributeFilters>
+ 
+</CoverageParams>
