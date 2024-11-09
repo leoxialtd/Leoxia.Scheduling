@@ -87,6 +87,8 @@ jobs:
   badge:
     needs: build
     runs-on: ubuntu-latest
+    env:
+     BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
     steps:
       - name: Checkout code
@@ -107,5 +109,5 @@ jobs:
           cp ./coveragereport/badge_linecoverage.svg ./badge.svg
           git add badge.svg
           git commit -m "Update coverage badge" || echo "No changes to commit"
-          git push
+          git push origin HEAD:$BRANCH_NAME
 
