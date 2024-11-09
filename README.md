@@ -1,5 +1,17 @@
 # Leoxia Scheduling
 
+## Build Status
+
+OS  | Compiler | Status | Coverage
+-------- | :------------ | :------------ | :------------
+Ubuntu | MsBuild | ![Build Status](https://github.com/leoxialtd/Leoxia.Scheduling/actions/workflows/dotnet-library.yml/badge.svg) | ![Coverage](https://raw.githubusercontent.com/leoxialtd/Leoxia.Scheduling/main/badge.svg)
+
+## Packages
+
+Name | Support | Feeds
+--------  | :------------ | :------------
+Leoxia.Scheduling | [![.NET Core](https://img.shields.io/badge/Build_For-.Net8.0-5C2D91.svg)](https://www.microsoft.com/net/core) | [![NuGet version](https://badge.fury.io/nu/Leoxia.Scheduling.svg)](https://www.nuget.org/packages/Leoxia.Scheduling/)
+
 ## Purpose
 
 This library is needed because there is no alternative that provides the following features:
