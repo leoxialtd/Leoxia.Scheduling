@@ -20,7 +20,9 @@ public static class ServiceExtensions
         services.AddSingleton<IJobSchedulerConfiguration>(sp => sp.GetRequiredService<JobSchedulerConfiguration>());
         services.AddSingleton<FastTimeProvider>();
         services.AddSingleton<IFastTimeProvider>(sp => sp.GetRequiredService<FastTimeProvider>());
-        services.AddSingleton<IJobRunRepository>(sp => sp.GetRequiredService<JobRepository>());
+        services.AddSingleton<IHistorizedJobRepository, HistorizedJobRepository>();
+        services.AddSingleton<IJobRunRepository, JobRunRepository>();
+        services.AddSingleton<ITaskRunner, TaskRunner>();
         services.AddSingleton<JobEngine>();
         services.AddSingleton<JobTimer>();
         services.AddSingleton<JobRepository>();

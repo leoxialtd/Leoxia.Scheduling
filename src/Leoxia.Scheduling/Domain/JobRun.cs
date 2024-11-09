@@ -4,7 +4,11 @@ namespace Leoxia.Scheduling.Domain;
 
 internal class JobRun
 {
+    private readonly object _sync = new ();
+
     private DateTimeOffset? _nextRun;
+    private bool _isRunning;
+    public DateTimeOffset Start { get; private set; }
 
     public JobRun(Job job, DateTimeOffset now)
     {
@@ -15,6 +19,11 @@ internal class JobRun
     public bool ShouldRun(DateTimeOffset now)
     {
         if (HasReachMaximumExecution)
+        {
+            return false;
+        }
+
+        if (IsRunning && !Job.Overlapping)
         {
             return false;
         }
@@ -38,7 +47,23 @@ internal class JobRun
 
     public Job Job { get; }
 
-    public bool IsRunning { get; set; }
+    public bool IsRunning
+    {
+        get
+        {
+            lock (_sync)
+            {
+                return _isRunning;
+            }
+        }
+        set
+        {
+            lock (_sync)
+            {
+                _isRunning = value;
+            }
+        }
+    }
 
     public ConcurrentBag<Task> Runs { get; } = new ConcurrentBag<Task>();
 
@@ -49,6 +74,13 @@ internal class JobRun
 
     public void SetNextRun(DateTimeOffset now)
     {
+        IsRunning = true;
+        Start = now;
         _nextRun = Job.RunScheduler.GetNextRun(_nextRun ?? now);
+    }
+
+    public HistorizedJobRun ToHistorizedJobRun()
+    {
+        return new HistorizedJobRun(this);
     }
 }

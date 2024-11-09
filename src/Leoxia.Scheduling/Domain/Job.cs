@@ -1,9 +1,12 @@
-﻿using Leoxia.Scheduling.Abstractions;
+﻿
+using Leoxia.Scheduling.Abstractions;
 
 namespace Leoxia.Scheduling.Domain;
 
 internal class Job(Type type, IInvocableResolver resolver) : IJob
 {
+    public DateTimeOffset CreationDate { get; set; }
+
     public string Name { get; set; } = type.Name;
 
     public Type Type { get; } = type;
@@ -17,6 +20,8 @@ internal class Job(Type type, IInvocableResolver resolver) : IJob
     public IInvocableResolver Resolver { get; set; } = resolver;
 
     public Queue<Func<IInvocable,Task>> ExecutionQueue { get; } = new Queue<Func<IInvocable, Task>>();
+
+    public bool Overlapping { get; set; } = true;
 }
 
 internal class DummyRunScheduler : IRunScheduler

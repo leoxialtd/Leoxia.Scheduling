@@ -26,9 +26,10 @@ This library is needed because there is no alternative that provides the followi
 - [x] Can wait for engine start
 - [x] Job retrieval
 - [x] Can attach a successor task
-- [x] Custom job resolver (not tested)
+- [x] Custom job resolver
 - [x] Cron schedule
-- [x] Max times of schedule (not sufficiently tested)
-- [ ] Task scheduling
-- [ ] Prevent overlap
-- [ ] Job run history
+- [x] Max times of schedule
+- [x] Task scheduling
+- [x] Prevent overlap
+- [x] Job run history
+- [ ] Error handling

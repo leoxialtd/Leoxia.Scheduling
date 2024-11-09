@@ -4,18 +4,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Leoxia.Scheduling.Domain;
 
-internal class JobRepository : IJobRepository, IJobRunRepository
+internal class JobRepository : IJobRepository
 {
-    private readonly IFastTimeProvider _provider;
     private readonly ILogger<JobRepository> _logger;
-    private readonly ConcurrentBag<Job> _jobs = new ConcurrentBag<Job>();
-    private readonly ConcurrentBag<JobRun> _runs = new ();
+    private readonly ConcurrentBag<Job> _jobs = new ();
 
     public JobRepository(
-        IFastTimeProvider provider,
         ILogger<JobRepository> logger)
     {
-        _provider = provider;
         _logger = logger;
     }
 
@@ -23,17 +19,25 @@ internal class JobRepository : IJobRepository, IJobRunRepository
     {
         _logger.LogInformation($"Job {job.Type} scheduled.");
         _jobs.Add(job);
-        var now = _provider.UtcNow();
-        _runs.Add(new JobRun(job, now));
     }
 
     public IEnumerable<IJob> GetJobs()
     {
         return _jobs.ToArray().Cast<IJob>();
     }
+}
+
+internal class JobRunRepository : IJobRunRepository
+{
+    private readonly ConcurrentDictionary<Job, JobRun> _runs = new();
 
     public IEnumerable<JobRun> GetJobRuns()
     {
-        return _runs.ToArray();
+        return _runs.Values.ToArray();
+    }
+
+    public JobRun GetOrAdd(IJob job)
+    {
+        return _runs.GetOrAdd((Job)job, j => new JobRun(j, j.CreationDate));
     }
 }

@@ -16,5 +16,7 @@ public interface IJobBuilder
 
     IJobBuilder ThenRun(Func<IInvocable, Task> action);
 
+    IJobBuilder PreventOverlap();
+
     IJob Build();
 }

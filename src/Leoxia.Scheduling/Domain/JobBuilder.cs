@@ -5,11 +5,17 @@ namespace Leoxia.Scheduling.Domain;
 internal class JobBuilder : IJobBuilder
 {
     private readonly JobRepository _repository;
+    private readonly IFastTimeProvider _provider;
     private readonly Job _job;
 
-    public JobBuilder(JobRepository repository, Type invocableType, IInvocableResolver resolver)
+    public JobBuilder(
+        JobRepository repository,
+        Type invocableType,
+        IInvocableResolver resolver,
+        IFastTimeProvider provider)
     {
         _repository = repository;
+        _provider = provider;
         _job = new Job(invocableType, resolver);
     }
 
@@ -55,8 +61,15 @@ internal class JobBuilder : IJobBuilder
         return this;
     }
 
+    public IJobBuilder PreventOverlap()
+    {
+        _job.Overlapping = false;
+        return this;
+    }
+
     public IJob Build()
     {
+        _job.CreationDate = _provider.UtcNow();
         _repository.Add(_job);
         return _job;
     }

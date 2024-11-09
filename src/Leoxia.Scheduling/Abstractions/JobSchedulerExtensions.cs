@@ -7,16 +7,15 @@ public static class JobSchedulerExtensions
         return scheduler.Schedule(typeof(T));
     }
 
-    // TODO: fix this to support current usage
-    //public static IJobBuilder Schedule(this IJobScheduler scheduler, Func<Task> asyncTaskProvider)
-    //{
-    //    return scheduler.Schedule();
-    //}
+    public static IJobBuilder Schedule(this IJobScheduler scheduler, Func<Task> asyncTaskProvider)
+    {
+        return scheduler.Schedule(new JobTaskWrapper(asyncTaskProvider));
+    }
 
-    //public static IJobBuilder Schedule(this IJobScheduler scheduler, Action actionToSchedule)
-    //{
-    //    return scheduler.Schedule();
-    //}
+    public static IJobBuilder Schedule(this IJobScheduler scheduler, Action action)
+    {
+        return scheduler.Schedule(new JobWrapper(action));
+    }
 
     public static IJobBuilder ThenRun(this IJobBuilder builder, Action<IInvocable> action)
     {
@@ -61,5 +60,36 @@ public static class JobSchedulerExtensions
             action(j);
             return Task.CompletedTask;
         };
+    }
+}
+
+public class JobTaskWrapper : IInvocable
+{
+    private readonly Func<Task> _asyncTaskProvider;
+
+    public JobTaskWrapper(Func<Task> asyncTaskProvider)
+    {
+        _asyncTaskProvider = asyncTaskProvider;
+    }
+
+    public async Task Invoke()
+    {
+        await _asyncTaskProvider();
+    }
+}
+
+public class JobWrapper : IInvocable
+{
+    private readonly Action _action;
+
+    public JobWrapper(Action action)
+    {
+        _action = action;
+    }
+
+    public Task Invoke()
+    {
+        _action();
+        return Task.CompletedTask;
     }
 }

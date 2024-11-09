@@ -4,10 +4,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Leoxia.Scheduling.Domain;
 
+/// <summary>
+/// Computes whether it's time to schedule and next run date,
+/// then runs the scheduled jobs.
+/// </summary>
 internal class JobEngine
 {
     private readonly ILogger<JobEngine> _logger;
-    private readonly IJobRunRepository _repository;
+    private readonly ITaskRunner _taskRunner;
+    private readonly IJobRepository _repository;
+    private readonly IJobRunRepository _runRepository;
+    private readonly IHistorizedJobRepository _historizedJobRepository;
     private readonly JobSchedulerConfiguration _configuration;
     private readonly IFastTimeProvider _timeProvider;
     private readonly ConcurrentDictionary<int, Task> _runningTasks = new ();
@@ -17,12 +24,18 @@ internal class JobEngine
 
     public JobEngine(
         ILogger<JobEngine> logger,
-        IJobRunRepository repository,
+        ITaskRunner taskRunner,
+        IJobRepository repository,
+        IJobRunRepository runRepository,
+        IHistorizedJobRepository historizedJobRepository,
         JobSchedulerConfiguration configuration,
         IFastTimeProvider timeProvider)
     {
         _logger = logger;
+        _taskRunner = taskRunner;
         _repository = repository;
+        _runRepository = runRepository;
+        _historizedJobRepository = historizedJobRepository;
         _configuration = configuration;
         _timeProvider = timeProvider;
     }
@@ -30,11 +43,11 @@ internal class JobEngine
     public void Run(DateTimeOffset now)
     {
         var scheduledRuns = new List<JobRun>();
-        var runs = _repository.GetJobRuns();
         lock (_synchro)
         {
-            foreach (var run in runs)
+            foreach (var job in _repository.GetJobs())
             {
+                var run = _runRepository.GetOrAdd(job);
                 if (_isRunning && run.ShouldRun(now))
                 {
                     run.SetNextRun(_timeProvider.UtcNow());
@@ -46,7 +59,9 @@ internal class JobEngine
         foreach (var run in scheduledRuns)
         {
             _logger.LogDebug($"Run {run} running...");
-            var task = Task.Run(async () =>
+            var historizedRun = run.ToHistorizedJobRun();
+            _historizedJobRepository.Add(historizedRun);
+            var task = _taskRunner.Run(async () =>
             {
                 try
                 {
@@ -68,14 +83,18 @@ internal class JobEngine
                 {
                     _configuration.ExceptionHandler(e, $"While running {run}");
                 }
+            }).ContinueWith(t =>
+            {
+                run.IsRunning = false;
+                historizedRun.SetEnd(_timeProvider.UtcNow());
             });
             _runningTasks.TryAdd(task.Id, task);
         }
 
-        Task.Run(Cleanup);
+        _taskRunner.Run(Cleanup);
     }
 
-    private void Cleanup()
+    private Task Cleanup()
     {
         foreach (var task in _runningTasks.Values)
         {
@@ -84,6 +103,8 @@ internal class JobEngine
                 _runningTasks.TryRemove(task.Id, out _);
             }
         }
+
+        return Task.CompletedTask;
     }
 
     public async Task Stop()

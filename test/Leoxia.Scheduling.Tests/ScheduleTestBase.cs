@@ -7,6 +7,7 @@ using System.Globalization;
 
 namespace Leoxia.Scheduling.Tests;
 
+[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public class ScheduleTestBase
 {
     private readonly NLog.ILogger _logger = LogManager.GetCurrentClassLogger();

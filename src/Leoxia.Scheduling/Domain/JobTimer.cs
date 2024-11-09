@@ -5,6 +5,7 @@ namespace Leoxia.Scheduling.Domain;
 
 /// <summary>
 /// Starts and stops the timer loop.
+/// Runs the <see cref="JobEngine"/> on the timer tick.
 /// </summary>
 internal class JobTimer
 {
