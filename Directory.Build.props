@@ -1,11 +1,9 @@
 <Project>
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Copyright>Copyright (c) Leoxia Ltd 2011 - 2042. All Rights reserved.</Copyright>
 	  <Company>Leoxia</Company>
 	  <Authors>Leoxia</Authors>
-	  <Nullable>enable</Nullable>
 	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 	  <PackageLicenseType>file</PackageLicenseType>
     <PackageProject>https://www.leoxia.com</PackageProject>
