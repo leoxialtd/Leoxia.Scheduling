@@ -5,7 +5,7 @@
 	  <Company>Leoxia</Company>
 	  <Authors>Leoxia</Authors>
 	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-	  <PackageLicenseType>file</PackageLicenseType>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProject>https://www.leoxia.com</PackageProject>
     <Repository>https://github.com/leoxialtd/leoxia.scheduling</Repository>
     <RepositoryType>Git</RepositoryType>
@@ -15,6 +15,7 @@
     <IsPackable>true</IsPackable>
     <Deterministic>true</Deterministic>
     <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
   </PropertyGroup>
 
@@ -27,5 +28,7 @@
 
   <ItemGroup Condition="'$(IsPackable)' == 'true'">
     <None Include="../../images/icon.png" Link="Properties\icon.png" Pack="true" PackagePath="\"/>
+    <None Include="../../README.md" Pack="true" PackagePath="\"/>
+    <None Include="../../LICENSE" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

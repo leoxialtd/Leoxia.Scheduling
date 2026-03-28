@@ -10,7 +10,7 @@ Ubuntu | MsBuild | ![Build Status](https://github.com/leoxialtd/Leoxia.Schedulin
 
 Name | Support | Feeds
 --------  | :------------ | :------------
-Leoxia.Scheduling | [![.NET Core](https://img.shields.io/badge/Build_For-.Net8.0-5C2D91.svg)](https://www.microsoft.com/net/core) | [![NuGet version](https://badge.fury.io/nu/Leoxia.Scheduling.svg)](https://www.nuget.org/packages/Leoxia.Scheduling/)
+Leoxia.Scheduling | [![.NET Core](https://img.shields.io/badge/Build_For-.Net8.0-5C2D91.svg)](https://www.microsoft.com/net/core) [![.NET Core](https://img.shields.io/badge/Build_For-.Net10.0-5C2D91.svg)](https://www.microsoft.com/net/core) | [![NuGet version](https://badge.fury.io/nu/Leoxia.Scheduling.svg)](https://www.nuget.org/packages/Leoxia.Scheduling/)
 
 ## Purpose
 
@@ -44,4 +44,4 @@ This library is needed because there is no alternative that provides the followi
 - [x] Task scheduling
 - [x] Prevent overlap
 - [x] Job run history
-- [ ] Error handling
+- [x] Error handling
