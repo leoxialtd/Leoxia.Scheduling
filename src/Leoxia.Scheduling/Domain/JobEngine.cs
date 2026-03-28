@@ -58,7 +58,7 @@ internal class JobEngine
 
         foreach (var run in scheduledRuns)
         {
-            _logger.LogDebug($"Run {run} running...");
+            _logger.LogDebug("Run {Run} running...", run);
             var historizedRun = run.ToHistorizedJobRun();
             _historizedJobRepository.Add(historizedRun);
             var task = _taskRunner.Run(async () =>
@@ -67,16 +67,16 @@ internal class JobEngine
                 {
                     using (var invocable = run.Job.Resolver.Resolve(run.Job))
                     {
-                        _logger.LogDebug($"[Scheduling] Run {run}. Invoking job...");
+                        _logger.LogDebug("[Scheduling] Run {Run}. Invoking job...", run);
                         await invocable.Invocable.Invoke();
-                        _logger.LogDebug($"[Scheduling] Run {run}. Job invoked.");
+                        _logger.LogDebug("[Scheduling] Run {Run}. Job invoked.", run);
 
                         foreach (var action in run.Job.ExecutionQueue)
                         {
                             await action(invocable.Invocable);
                         }
 
-                        _logger.LogDebug($"[Scheduling] Run {run}. Queued actions invoked.");
+                        _logger.LogDebug("[Scheduling] Run {Run}. Queued actions invoked.", run);
                     }
                 }
                 catch (Exception e)
